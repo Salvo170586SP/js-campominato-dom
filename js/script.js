@@ -29,15 +29,15 @@ const difficultyElement = document.getElementById('difficulty');
 const gridElement = document.getElementById('grid');
 
 //AGGANCIO EVENTO AL BOTTONE
-buttonElement.addEventListener('click', function(){
+buttonElement.addEventListener('click', function () {
     console.log('click');
     //cambio il testo al click del bottone
     buttonElement.innerText = 'RICOMINCIA';
-    
+
     //collego i valori della select al bottone
     const difficultyValue = difficultyElement.value;
     console.log(difficultyValue);
-    
+
     //svuota la griglia del gioco di default
     gridElement.innerHTML = '';
 
@@ -46,7 +46,25 @@ buttonElement.addEventListener('click', function(){
     //variabile punteggio
     let point = 0;
 
+    
+    //calcolo le celle in base alla difficoltà
+    let cells;
+    let cellRow;
 
+    switch (difficultyValue) {
+        case 'low':
+            cells = 100;
+            cellRow = 10;
+            break;
+        case 'medium':
+            cells = 81;
+            cellRow = 9;
+            break;
+        default:
+            cells = 49;
+            cellRow = 7;
+            break;
+    }
 
 
 })
