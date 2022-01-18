@@ -22,49 +22,78 @@ BONUS:
 2- quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle
 */
 
-//SEZIONE ELEMENTI PAGINA//
-//prendo il bottone
-const buttonElement = document.getElementById('play');
+
+//recuperare gli elementi che ci servono della pagina
 const difficultyElement = document.getElementById('difficulty');
 const gridElement = document.getElementById('grid');
+const buttonElement = document.getElementById('play');
 
-//AGGANCIO EVENTO AL BOTTONE
-buttonElement.addEventListener('click', function () {
-    console.log('click');
-    //cambio il testo al click del bottone
-    buttonElement.innerText = 'RICOMINCIA';
+//costanti difficoltà
+const numbHard = 100;
+const numbMedium = 81;
+const numbLow = 49;
 
-    //collego i valori della select al bottone
+//creare una funzione a una select per determinare le difficoltà
+difficultyElement.addEventListener('change', function () {
     const difficultyValue = difficultyElement.value;
-    console.log(difficultyValue);
 
-    //svuota la griglia del gioco di default
     gridElement.innerHTML = '';
 
-    //costante numero bombe
-    const bombNumber = 16;
-    //variabile punteggio
-    let point = 0;
+    if (difficultyValue === 'hard') {
+        //GENERO 100 GRIGLIE IN PAGINA
+        for (let i = 0; i < numbHard; i++) {
+            const cell = addCell();
+            //aggiungo la classe all'elemento
+            cell.classList.add('cell-100');
 
-    
-    //calcolo le celle in base alla difficoltà
-    let cells;
-    let cellRow;
+            //inserisco l'elemento div dentro al genitore di classe grid
+            gridElement.appendChild(cell);
+            cell.setAttribute('id', i + 1);
+            cell.innerText = i + 1;
 
-    switch (difficultyValue) {
-        case 'low':
-            cells = 100;
-            cellRow = 10;
-            break;
-        case 'medium':
-            cells = 81;
-            cellRow = 9;
-            break;
-        default:
-            cells = 49;
-            cellRow = 7;
-            break;
+            //creo funzione che al click aggiunge o rimuove la classe 'click-cell'
+            cell.addEventListener('click', function () {
+                cell.classList.toggle('click-cell');
+            })
+        }
+
+    } else if (difficultyValue === 'medium') {
+
+        //GENERO 81 GRIGLIE IN PAGINA
+        for (let i = 0; i < numbMedium; i++) {
+            const cell = addCell();
+
+            //aggiungo la classe all'elemento
+            cell.classList.add('cell-81');
+
+            //inserisco l'elemento div dentro al genitore di classe grid
+            gridElement.appendChild(cell);
+            cell.setAttribute('id', i + 1);
+            cell.innerText = i + 1;
+
+            //creo funzione che al click aggiunge o rimuove la classe 'click-cell'
+            cell.addEventListener('click', function () {
+                cell.classList.toggle('click-cell');
+            })
+        }
+
+    } else {
+        //GENERO 49 GRIGLIE IN PAGINA
+        for (let i = 0; i < numbLow; i++) {
+            const cell = addCell();
+
+            //aggiungo la classe all'elemento
+            cell.classList.add('cell-49');
+
+            //inserisco l'elemento div dentro al genitore di classe grid
+            gridElement.appendChild(cell);
+            cell.setAttribute('id', i + 1);
+            cell.innerText = i + 1;
+
+            //creo funzione che al click aggiunge o rimuove la classe 'click-cell'
+            cell.addEventListener('click', function () {
+                cell.classList.toggle('click-cell');
+            })
+        }
     }
-
-
-})
+}
