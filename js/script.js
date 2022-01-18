@@ -1,99 +1,118 @@
-console.log('js ok');
-
 /* 
-L'utente indica un livello di difficoltà in base al quale viene generata una griglia di gioco quadrata, 
-in cui ogni cella contiene un numero tra quelli compresi in un range:
+L'utente indica un livello di difficoltà in base al quale viene generata una griglia di gioco quadrata, in cui ogni cella contiene un numero tra quelli compresi in un range:
 con difficoltà 1 => tra 1 e 100
 con difficoltà 2 => tra 1 e 81
 con difficoltà 3 => tra 1 e 49
-
 Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
-
 I numeri nella lista delle bombe non possono essere duplicati.
-
-In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati 
-- abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, 
-altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
 La partita termina quando il giocatore clicca su una bomba o raggiunge il numero massimo possibile di numeri consentiti.
 Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una b.
-
 BONUS:
 1- quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste
 2- quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle
 */
 
 
-//recuperare gli elementi che ci servono della pagina
+
+
+//* FUNZIONI DA UTILIZZARE
+
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+
+
+//RECUPERO ELEMENTI
 const difficultyElement = document.getElementById('difficulty');
 const gridElement = document.getElementById('grid');
 const buttonElement = document.getElementById('play');
 
-//costanti difficoltà
-const numbHard = 100;
-const numbMedium = 81;
-const numbLow = 49;
+buttonElement.addEventListener('click', function () {
+    //cambio testo al bottone
+    buttonElement.innerText = 'RIGIOCA';
 
-//creare una funzione a una select per determinare le difficoltà
-difficultyElement.addEventListener('change', function () {
-    const difficultyValue = difficultyElement.value;
-
+    //faccio il reset della griglia
     gridElement.innerHTML = '';
 
-    if (difficultyValue === 'hard') {
-        //GENERO 100 GRIGLIE IN PAGINA
-        for (let i = 0; i < numbHard; i++) {
-            const cell = addCell();
-            //aggiungo la classe all'elemento
-            cell.classList.add('cell-100');
+    let attempts = 0;
+    const TOTAL_BOMBS = 16;
+    
+    const level = document.getElementById('difficulty').value;
 
-            //inserisco l'elemento div dentro al genitore di classe grid
-            gridElement.appendChild(cell);
-            cell.setAttribute('id', i + 1);
-            cell.innerText = i + 1;
-
-            //creo funzione che al click aggiunge o rimuove la classe 'click-cell'
-            cell.addEventListener('click', function () {
-                cell.classList.toggle('click-cell');
-            })
-        }
-
-    } else if (difficultyValue === 'medium') {
-
-        //GENERO 81 GRIGLIE IN PAGINA
-        for (let i = 0; i < numbMedium; i++) {
-            const cell = addCell();
-
-            //aggiungo la classe all'elemento
-            cell.classList.add('cell-81');
-
-            //inserisco l'elemento div dentro al genitore di classe grid
-            gridElement.appendChild(cell);
-            cell.setAttribute('id', i + 1);
-            cell.innerText = i + 1;
-
-            //creo funzione che al click aggiunge o rimuove la classe 'click-cell'
-            cell.addEventListener('click', function () {
-                cell.classList.toggle('click-cell');
-            })
-        }
-
-    } else {
-        //GENERO 49 GRIGLIE IN PAGINA
-        for (let i = 0; i < numbLow; i++) {
-            const cell = addCell();
-
-            //aggiungo la classe all'elemento
-            cell.classList.add('cell-49');
-
-            //inserisco l'elemento div dentro al genitore di classe grid
-            gridElement.appendChild(cell);
-            cell.setAttribute('id', i + 1);
-            cell.innerText = i + 1;
-
-            //creo funzione che al click aggiunge o rimuove la classe 'click-cell'
-            cell.addEventListener('click', function () {
-                cell.classList.toggle('click-cell');
-            })
-        }
+    let totalCells;
+    let cellsRows;
+    
+    //collego il valore della select con la quantità di celle
+    switch(level) {
+        case 'low':
+            totalCells = 100;
+            break;
+        case 'hard':
+            totalCells = 49;
+            break;
+        default:
+            totalCells = 81;
+            break;
     }
-}
+
+     //calcolo la radice quadrata del numero
+    cellsRows = Math.sqrt(totalCells);
+    
+    
+    //calcolo il punteggio massimo
+    const maxAttempts = totalCells - TOTAL_BOMBS;
+    
+    //genero numeri casuali
+    const generateBombs = (totalBombs, totalNumbers) => {
+        const bombs = [];
+        while(bombs.length < totalBombs){
+            const randNumber = getRandomNumber(1, totalNumbers);
+            if(!bombs.includes(randNumber)) bombs.push(randNumber);
+        }
+        return bombs;
+    }
+    
+    //genero celle
+    const generateCell = (number, cellsRows) => {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.innerText = number;
+        const wd = `calc(100% / ${cellsRows})`;
+        cell.style.width = wd;
+        cell.style.height = wd;
+        return cell;
+    }
+
+    //genero griglia
+    const gridGenerate = (cellsNumbers, cellsRows, bombs) => {
+        for(let i = 1; i <= cellsNumbers; i++){
+            const cell = generateCell(i, cellsRows);
+
+            grid.appendChild(cell);
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    const bombs = generateBombs(TOTAL_BOMBS, totalCells);
+    
+    gridGenerate(totalCells, cellsRows, bombs); 
+    
+        
+    
+
+})
+
+
+
