@@ -1,6 +1,5 @@
 console.log('js ok');
 
-
 /* 
 L'utente indica un livello di difficoltà in base al quale viene generata una griglia di gioco quadrata, 
 in cui ogni cella contiene un numero tra quelli compresi in un range:
@@ -26,7 +25,7 @@ BONUS:
 //SEZIONE ELEMENTI PAGINA//
 //prendo il bottone
 const buttonElement = document.getElementById('play');
-const difficulyElement = document.getElementById('difficulty');
+const difficultyElement = document.getElementById('difficulty');
 const gridElement = document.getElementById('grid');
 
 //AGGANCIO EVENTO AL BOTTONE
@@ -34,11 +33,18 @@ buttonElement.addEventListener('click', function(){
     console.log('click');
     //cambio il testo al click del bottone
     buttonElement.innerText = 'RICOMINCIA';
-
+    
+    //collego i valori della select al bottone
+    const difficultyValue = difficultyElement.value;
+    console.log(difficultyValue);
+    
     //svuota la griglia del gioco di default
     gridElement.innerHTML = '';
 
-    
+    //costante numero bombe
+    const bombNumber = 16;
+    //variabile punteggio
+    let point = 0;
 
 
 
