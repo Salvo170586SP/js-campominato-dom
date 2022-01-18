@@ -27,9 +27,20 @@ BONUS:
 //prendo il bottone
 const buttonElement = document.getElementById('play');
 const difficulyElement = document.getElementById('difficulty');
+const gridElement = document.getElementById('grid');
 
+//AGGANCIO EVENTO AL BOTTONE
 buttonElement.addEventListener('click', function(){
     console.log('click');
+    //cambio il testo al click del bottone
+    buttonElement.innerText = 'RICOMINCIA';
+
+    //svuota la griglia del gioco di default
+    gridElement.innerHTML = '';
+
+    
+
+
 
 
 })
