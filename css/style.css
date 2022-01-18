@@ -49,3 +49,8 @@ main{
     align-items: center;
     font-size: 20px;
 }
+
+button, select{
+    padding: 20px;
+    font-size: 20px;
+}
