@@ -61,11 +61,15 @@ main {
 
 #grid .cell.click-cell {
     background-color: azure;
-    cursor: not-allowed;
 }
 
 #grid .cell.cell-bomb{
     background-color: red;
+}
+
+
+
+#grid .cell.cell-disable{
     cursor: not-allowed;
 }
 

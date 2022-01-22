@@ -85,6 +85,22 @@ buttonElement.addEventListener('click', function () {
         return cell;
     };
 
+
+
+
+    //rimuovo eventListener da tutte le celle
+    const disableCell = (cell) => {
+        const clone = cell.cloneNode();
+        clone.innerText = cell.innerText;
+        clone.classList.add('cell-disable');
+        cell.parentNode.replaceChild(clone, cell);
+
+        return clone;
+    }
+
+
+
+
     //fine partita 
     const gameOver = (bombs, point, hasLost) => {
 
@@ -113,7 +129,9 @@ buttonElement.addEventListener('click', function () {
     //gestione click cella
     //non fa cliccare se già cliccata
     const onCellClick = (clickedCell, bombs, number) => {
-        clickedCell.removeEventListener('click', onCellClick);
+        
+        const disabledCell = disableCell(clickedCell);
+        //clickedCell.removeEventListener('click', onCellClick);
 
         //controllo se è una bomba
         if (bombs.includes(number)) {
@@ -136,9 +154,10 @@ buttonElement.addEventListener('click', function () {
         const cells = document.querySelectorAll('.cell');
         for (let i = 0; i < cells.length; i++) {
             const cell = cells[i];
-            const cellNumber = parseInt(cell.innerText);
+            const disabledCell = disableCell(cell)
+            const cellNumber = parseInt(disabledCell.innerText);
             cell.removeEventListener('click', onCellClick);
-            if (bombs.includes(cellNumber)) cell.classList.add('cell-bomb');
+            if (bombs.includes(cellNumber)) disabledCell.classList.add('cell-bomb');
         }
     };
 
