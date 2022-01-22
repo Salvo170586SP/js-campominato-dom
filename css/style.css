@@ -58,12 +58,18 @@ main {
 }
 
 
-.cell.click-cell {
+#grid .cell.click-cell {
     background-color: azure;
     cursor: not-allowed;
 }
 
-.cell.cell-bomb{
+#grid .cell.cell-bomb{
     background-color: red;
     cursor: not-allowed;
+}
+
+.message{
+    color: red;
+    text-align: center;
+    font-size: 25px;
 }
