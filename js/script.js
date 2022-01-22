@@ -86,11 +86,24 @@ buttonElement.addEventListener('click', function () {
     //fine partita 
     const gameOver = (bombs, point, hasLost) => {
 
+        showBombs(bombs);
+       
         const messageElement = document.createElement('h3');
         messageElement.className = 'message';
-        let message;
         
 
+        //messaggi di fine partita
+        let message;
+
+        if(hasLost){
+            message = `HAI PERSO! HAI FATTO ${point}`;
+        }else{
+            message = `HAI VINTO!`
+        }
+
+        messageElement.innerText =  message;
+
+        messageElement.appendChild(messageElement);
     };
 
 
@@ -119,6 +132,17 @@ buttonElement.addEventListener('click', function () {
     };
 
 
+    //mostra le bombe e blocca il click
+    const showBombs = (bombs) => {
+
+        const cells = document.querySelectorAll('.cell');
+        for(let i =0; i < cells.length; i++){
+            const cell = cells[i];
+            const cellNumber = parseInt(cell.innerText);
+            cell.removeEventListener('click', onCellClick);
+            if(bombs.includes(cellNumber)) cell.classList.add('cell-bomb');
+        }
+    };
 
 
     //genero griglia
