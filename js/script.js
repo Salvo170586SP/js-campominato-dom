@@ -15,18 +15,15 @@ BONUS:
 
 
 
-
 //* FUNZIONI DA UTILIZZARE
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
 
 
 //RECUPERO ELEMENTI
 const difficultyElement = document.getElementById('difficulty');
 const gridElement = document.getElementById('grid');
 const buttonElement = document.getElementById('play');
-const mainElement = document.getElementById('main-grid');
 
 buttonElement.addEventListener('click', function () {
     //cambio testo al bottone
@@ -59,7 +56,6 @@ buttonElement.addEventListener('click', function () {
     //calcolo la radice quadrata del numero
     cellsRows = Math.sqrt(totalCells);
 
-
     //calcolo il punteggio massimo
     const maxAttempts = totalCells - TOTAL_BOMBS;
 
@@ -73,7 +69,6 @@ buttonElement.addEventListener('click', function () {
         return bombs;
     };
 
-
     //genero celle
     const generateCell = (number, cellsRows) => {
         const cell = document.createElement('div');
@@ -85,7 +80,6 @@ buttonElement.addEventListener('click', function () {
         return cell;
     };
 
-
     //fine partita 
     const gameOver = (bombs, point, hasLost) => {
 
@@ -93,7 +87,6 @@ buttonElement.addEventListener('click', function () {
 
         const messageElement = document.createElement('h3');
         messageElement.className = 'message';
-
 
         //messaggi di fine partita
         let message;
@@ -106,9 +99,8 @@ buttonElement.addEventListener('click', function () {
 
         messageElement.innerText = message;
 
-        mainElement.appendChild(messageElement);
+        gridElement.appendChild(messageElement);
     };
-
 
     //rimuovo eventListener da tutte le celle
     const disableCell = (cell) => {
@@ -125,7 +117,6 @@ buttonElement.addEventListener('click', function () {
     const onCellClick = (clickedCell, bombs, number) => {
         
         const disabledCell = disableCell(clickedCell);
-        //clickedCell.removeEventListener('click', onCellClick);
 
         //controllo se è una bomba
         if (bombs.includes(number)) {
@@ -140,8 +131,6 @@ buttonElement.addEventListener('click', function () {
         }
     };
 
-
-
     //mostra le bombe e blocca il click
     const showBombs = (bombs) => {
 
@@ -155,28 +144,18 @@ buttonElement.addEventListener('click', function () {
         }
     };
 
-
-
     //genero griglia
     const gridGenerate = (cellsNumbers, cellsRows, bombs) => {
         for (let i = 1; i <= cellsNumbers; i++) {
             const cell = generateCell(i, cellsRows);
             cell.addEventListener('click', (e) => onCellClick(e.target, bombs, i));
             grid.appendChild(cell);
-
         }
-
     };
-
-
 
     const bombs = generateBombs(TOTAL_BOMBS, totalCells);
     console.log(bombs);
     gridGenerate(totalCells, cellsRows, bombs);
-
-
-
-
 })
 
 
