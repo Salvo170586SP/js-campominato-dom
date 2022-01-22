@@ -36,14 +36,14 @@ buttonElement.addEventListener('click', function () {
 
     let attempts = 0;
     const TOTAL_BOMBS = 16;
-    
+
     const level = document.getElementById('difficulty').value;
 
     let totalCells;
     let cellsRows;
-    
+
     //collego il valore della select con la quantità di celle
-    switch(level) {
+    switch (level) {
         case 'low':
             totalCells = 100;
             break;
@@ -53,25 +53,25 @@ buttonElement.addEventListener('click', function () {
         default:
             totalCells = 81;
             break;
-    }
+    };
 
-     //calcolo la radice quadrata del numero
+    //calcolo la radice quadrata del numero
     cellsRows = Math.sqrt(totalCells);
-    
-    
+
+
     //calcolo il punteggio massimo
     const maxAttempts = totalCells - TOTAL_BOMBS;
-    
+
     //genero numeri casuali
     const generateBombs = (totalBombs, totalNumbers) => {
         const bombs = [];
-        while(bombs.length < totalBombs){
+        while (bombs.length < totalBombs) {
             const randNumber = getRandomNumber(1, totalNumbers);
-            if(!bombs.includes(randNumber)) bombs.push(randNumber);
+            if (!bombs.includes(randNumber)) bombs.push(randNumber);
         }
         return bombs;
-    }
-    
+    };
+
     //genero celle
     const generateCell = (number, cellsRows) => {
         const cell = document.createElement('div');
@@ -81,18 +81,28 @@ buttonElement.addEventListener('click', function () {
         cell.style.width = wd;
         cell.style.height = wd;
         return cell;
-    }
+    };
+
+
+    //gestione click cella
+    //non fa cliccare se già cliccata
+    const onCellClick = (clickedCell, bombs) => {
+        clickedCell.removeEventListener('click', onCellClick);
+    };
+
+
+
 
     //genero griglia
     const gridGenerate = (cellsNumbers, cellsRows, bombs) => {
-        for(let i = 1; i <= cellsNumbers; i++){
+        for (let i = 1; i <= cellsNumbers; i++) {
             const cell = generateCell(i, cellsRows);
-
+            cell.addEventListener('click', (e) => onCellClick(e.target, bombs));
             grid.appendChild(cell);
 
         }
 
-    }
+    };
 
 
 
@@ -106,11 +116,11 @@ buttonElement.addEventListener('click', function () {
 
 
     const bombs = generateBombs(TOTAL_BOMBS, totalCells);
-    
-    gridGenerate(totalCells, cellsRows, bombs); 
-    
-        
-    
+
+    gridGenerate(totalCells, cellsRows, bombs);
+
+
+
 
 })
 
