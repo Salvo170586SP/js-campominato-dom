@@ -83,11 +83,39 @@ buttonElement.addEventListener('click', function () {
         return cell;
     };
 
+    //fine partita 
+    const gameOver = (bombs, point, hasLost) => {
+
+        const messageElement = document.createElement('h3');
+        messageElement.className = 'message';
+        let message;
+        
+
+    };
+
 
     //gestione click cella
     //non fa cliccare se già cliccata
-    const onCellClick = (clickedCell, bombs) => {
+    const onCellClick = (clickedCell, bombs, number) => {
         clickedCell.removeEventListener('click', onCellClick);
+
+        //controllo se è una bomba
+        if(bombs.includes(number)){
+            gameOver(bombs, attempts, true );
+        }else{
+            clickedCell.classList.add('click-cell');
+            attempts++;
+
+            if(attempts === maxAttempts){
+                gameOver(bombs, attempts, false );
+
+
+            }
+
+
+        }
+
+
     };
 
 
@@ -97,7 +125,7 @@ buttonElement.addEventListener('click', function () {
     const gridGenerate = (cellsNumbers, cellsRows, bombs) => {
         for (let i = 1; i <= cellsNumbers; i++) {
             const cell = generateCell(i, cellsRows);
-            cell.addEventListener('click', (e) => onCellClick(e.target, bombs));
+            cell.addEventListener('click', (e) => onCellClick(e.target, bombs, i));
             grid.appendChild(cell);
 
         }

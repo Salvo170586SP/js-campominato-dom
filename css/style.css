@@ -58,12 +58,12 @@ main {
 }
 
 
-#grid .click-cell {
+.cell.click-cell {
     background-color: azure;
     cursor: not-allowed;
 }
 
-#grid .cell-bomb{
+.cell.cell-bomb{
     background-color: red;
     cursor: not-allowed;
 }
