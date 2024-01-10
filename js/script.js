@@ -24,13 +24,19 @@ const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)
 const difficultyElement = document.getElementById('difficulty');
 const gridElement = document.getElementById('grid');
 const buttonElement = document.getElementById('play');
+const clicca = document.getElementById('clicca');
+
+clicca.style.display = 'block';
+
 
 buttonElement.addEventListener('click', function () {
+    clicca.style.display = 'none';
     //cambio testo al bottone
     buttonElement.innerText = 'RIGIOCA';
 
     //faccio il reset della griglia
     gridElement.innerHTML = '';
+
 
     let attempts = 0;
     const TOTAL_BOMBS = 16;
@@ -92,7 +98,7 @@ buttonElement.addEventListener('click', function () {
         let message;
 
         if (hasLost) {
-            message = `HAI PERSO! HAI FATTO ${point}`;
+            message = `HAI PERSO! PUNTI: ${point}`;
         } else {
             message = `HAI VINTO!`
         }
@@ -115,7 +121,7 @@ buttonElement.addEventListener('click', function () {
     //gestione click cella
     //non fa cliccare se già cliccata
     const onCellClick = (clickedCell, bombs, number) => {
-        
+
         const disabledCell = disableCell(clickedCell);
 
         //controllo se è una bomba
